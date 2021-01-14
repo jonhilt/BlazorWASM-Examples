@@ -1,0 +1,19 @@
+@page "/diagrams"
+@inject IJSRuntime JsRuntime
+
+<div @ref="_diagramElement"></div>
+
+@code {
+    private ElementReference _diagramElement;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var diagramModule = await JsRuntime
+            .InvokeAsync<JSObjectReference>("import", "/diagrams.js");
+
+        var diagramDefinition = "digraph { HelloWorld }";
+
+        await diagramModule.InvokeVoidAsync("renderDot", diagramDefinition, _diagramElement);
+    }
+
+}

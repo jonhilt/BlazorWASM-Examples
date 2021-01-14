@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Components.Web.Extensions.Head
+@page "/"
+
+<h1>Regular H1 (outside of Counter component)</h1>
+
+<Counter />
+
+@if(!string.IsNullOrEmpty(Name)){
+	<h1>Hello @Name</h1>
+}
+
+@code
+{
+	private string remaining = "10";
+	
+	public string Name { get; set; }
+}
