@@ -9,7 +9,7 @@
     protected override async Task OnInitializedAsync()
     {
         var diagramModule = await JsRuntime
-            .InvokeAsync<JSObjectReference>("import", "/diagrams.js");
+            .InvokeAsync<IJSObjectReference>("import", "/diagrams.js");
 
         var diagramDefinition = "digraph { HelloWorld }";
 
