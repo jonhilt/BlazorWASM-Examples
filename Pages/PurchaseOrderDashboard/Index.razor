@@ -1,0 +1,38 @@
+﻿@page "/PurchaseOrderDashboard"
+@inject FakeApi FakeApi
+
+@using BlazorExamples.WASM.Pages.PurchaseOrderDashboard.Models
+
+@if (PurchaseOrderData != null)
+{
+    <PurchaseOrderSummary OrderDetails="PurchaseOrderData" />
+    <MaterialsToBeReceived MaterialsList="PurchaseOrderData.Materials.Where(x=>!x.Received).ToList()" OnReceived="ReceiveMaterial"/>
+    <MaterialsReceived MaterialsList="PurchaseOrderData.Materials.Where(x=>x.Received).ToList()"/>
+}
+
+@code {
+
+    private PurchaseOrderDetails PurchaseOrderData;
+    
+    
+    protected override Task OnInitializedAsync()
+    {
+        PurchaseOrderData = FakeApi.GetPurchaseOrders(1);
+        return base.OnInitializedAsync();
+    }
+
+    private void ReceiveMaterial(PurchaseOrderDetails.Material material)
+    {
+        // options here
+        // depends on whether we're interacting with an API, or the DB directly, and how (Blazor WASM or Server)
+        // either way, need to issue the command to the backend to receive the material
+        // then probably simplest to just reload the data from the backend
+        
+        // update backend (receive the material)
+        FakeApi.ReceiveMaterial(1, material.Id);
+        
+        // reload the PO data
+        PurchaseOrderData = FakeApi.GetPurchaseOrders(1);
+    }
+
+}

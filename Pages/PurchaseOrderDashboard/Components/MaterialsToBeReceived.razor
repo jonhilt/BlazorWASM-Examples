@@ -1,0 +1,28 @@
+﻿@using BlazorExamples.WASM.Pages.PurchaseOrderDashboard.Models
+
+<h3>Materials To Be Received</h3>
+
+<ul>
+    @if (MaterialsList != null)
+    {
+        @foreach (var material in MaterialsList)
+        {
+            <li>@material.Name (@material.Id) <button @onclick="()=>Receive(material)">Receive</button></li>
+        }
+    }
+</ul>
+
+@code {
+
+    [Parameter]
+    public List<PurchaseOrderDetails.Material> MaterialsList { get; set; }
+
+    [Parameter]
+    public EventCallback<PurchaseOrderDetails.Material> OnReceived { get; set; }
+    
+    private async Task Receive(PurchaseOrderDetails.Material material)
+    {
+        OnReceived.InvokeAsync(material);
+    }
+    
+}

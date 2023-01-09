@@ -1,6 +1,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
+using BlazorExamples.WASM.FakeBackend;
+using BlazorExamples.WASM.Pages.PurchaseOrderDashboard.Models;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +19,11 @@ namespace BlazorExamples.WASM
 
             builder.Services.AddScoped(
                 sp => new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
+            
+            builder.Services.AddBlazoredLocalStorage();
+
+            builder.Services.AddSingleton<FakeApi>();
+            builder.Services.AddSingleton<FakeDB>();
             
             await builder.Build().RunAsync();
         }

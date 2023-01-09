@@ -1,0 +1,20 @@
+﻿@using BlazorExamples.WASM.Pages.PurchaseOrderDashboard.Models
+
+<h3>Materials Received</h3>
+
+<ul>
+    @if (MaterialsList != null)
+    {
+        @foreach (var material in MaterialsList)
+        {
+            <li>@material.Name (@material.Id)</li>
+        }
+    }
+</ul>
+
+@code {
+    
+    [Parameter]
+    public List<PurchaseOrderDetails.Material> MaterialsList { get; set; }
+    
+}

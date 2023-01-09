@@ -1,0 +1,17 @@
+﻿@page "/BindModifiers"
+@using Blazored.LocalStorage
+@inject ILocalStorageService localStorage
+
+<Bio Value="@myBio" OnChange="OnMyBioChanged"/>
+
+@code {
+
+    string myBio;
+
+    private async Task OnMyBioChanged(string value)
+    {
+        myBio = value;
+        await localStorage.SetItemAsStringAsync("bio", value);
+    }
+
+}

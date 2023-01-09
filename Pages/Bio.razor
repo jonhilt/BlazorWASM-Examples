@@ -1,0 +1,21 @@
+﻿@using Blazored.LocalStorage
+@inject ILocalStorageService localStorage
+
+<input @bind:get="Value" @bind:set="OnInput" @bind:event="oninput" placeholder="Introduce yourself"></input>
+
+@code {
+
+    [Parameter]
+    public string Value { get; set; }
+    
+    [Parameter]
+    public EventCallback<string> OnChange { get; set; }
+
+    private async Task OnInput(string value)
+    {
+        var newValue = value.Replace("@", "at");
+        await OnChange.InvokeAsync(newValue);
+        await localStorage.SetItemAsStringAsync("bio", value);
+    }
+    
+}
